@@ -1,0 +1,19 @@
+<!-- 数据绑定 -->
+<view class="div1" id="div-{{message}}">{{message}}</view>
+<!-- 列表渲染 -->
+<view wx:for="{{array}}" wx:key="index">{{item}}</view>
+<!-- 条件渲染 -->
+<view wx:if="{{view == 'WEBVIEW'}}">WEBVIEW</view>
+<view wx:elif="{{view == 'APP'}}">APP</view>
+<view wx:else>MINA</view>
+
+<view hidden="{{condition}}">我不显示</view>
+<!-- 模板 -->
+<template name="staffName">
+  <view>
+    FirstName: {{firstName}}, LastName: {{lastName}}
+  </view>
+</template>
+<template is="staffName" data="{{...staffA}}"></template>
+<template is="staffName" data="{{...staffB}}"></template>
+<template is="staffName" data="{{...staffC}}"></template>
