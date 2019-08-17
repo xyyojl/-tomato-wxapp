@@ -12,7 +12,9 @@ Page({
     staffA: { firstName: 'Hulk', lastName: 'Hu' },
     staffB: { firstName: 'Shang', lastName: 'You' },
     staffC: { firstName: 'Gideon', lastName: 'Lin' },
-    str:'我是一段信息'
+    str:'我是一段信息',
+    obj:{id:1,text:'我是信息1'},
+    isActive: false
   },
   reverseStr(){
     this.data.str = this.data.str.split('').reverse().join('')
@@ -29,6 +31,17 @@ Page({
     var newArr = [last]
     array = array.concat(newArr)
     this.setData({ array: array })
+  },
+  changeObjText(){
+    // 方法1
+    this.data.obj.text = '我是信息2'
+    this.setData({obj:this.data.obj})
+    // 方法2
+    this.setData({ 'obj.text': '我是信息3' })
+  },
+  changeColor(){
+    this.setData({ isActive: !this.data.isActive})
+    console.log(this.data.isActive)
   },
   /**
    * 生命周期函数--监听页面加载
