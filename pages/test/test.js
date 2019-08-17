@@ -11,9 +11,25 @@ Page({
     condition: true,
     staffA: { firstName: 'Hulk', lastName: 'Hu' },
     staffB: { firstName: 'Shang', lastName: 'You' },
-    staffC: { firstName: 'Gideon', lastName: 'Lin' }
+    staffC: { firstName: 'Gideon', lastName: 'Lin' },
+    str:'我是一段信息'
   },
-
+  reverseStr(){
+    this.data.str = this.data.str.split('').reverse().join('')
+    this.setData({ str: this.data.str })
+  },
+  pushItem(){
+    // 微信小程序使用不了push()方法
+    /* var array = this.data.array
+    var last = array[array.length-1]
+    var newItem = last + 1
+    this.setData({ array: array.push(newItem)}) */
+    var array = this.data.array
+    var last = array[array.length - 1] + 1
+    var newArr = [last]
+    array = array.concat(newArr)
+    this.setData({ array: array })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -32,7 +48,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // 改变 data 里面的变量
+    this.setData({str:'123123123'})
   },
 
   /**

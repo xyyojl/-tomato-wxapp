@@ -17,3 +17,12 @@
 <template is="staffName" data="{{...staffA}}"></template>
 <template is="staffName" data="{{...staffB}}"></template>
 <template is="staffName" data="{{...staffC}}"></template>
+<!-- 需求：点击按钮，让下面这段文字翻转 -->
+<view>{{str}}</view>
+<button bindtap="reverseStr">点我翻转文字</button>
+
+<!-- 需求：点击push 一个数字进去 -->
+<view wx:for="{{array}}">
+我是第{{index}}个 {{item}}
+</view>
+<button bindtap="pushItem">点我增加一个数据</button>
