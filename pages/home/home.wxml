@@ -10,6 +10,7 @@
     <view class="tomato">
      <t-clock text="点击开始闹钟"></t-clock>
     </view>
+    <t-confirm placeholder="xxxx" visible="{{visible}}" bindconfirm="confirm" bindcancel="cancel"></t-confirm>
   </view>
 </view>
 

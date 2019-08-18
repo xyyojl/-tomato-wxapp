@@ -5,13 +5,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    lists:[
-      { id: 1, text:"我们将被生活关照，还是我们关照生活",selected:true},
-      { id: 1, text: "我们将被生活关照，还是我们关照生活", selected: false },
-      { id: 1, text: "我们将被生活关照，还是我们关照生活", selected: true }
-    ]
+    lists:[],
+    visible:true
   },
-
+  confirm(event){
+    // 拿到内容生成todo
+    console.log(event.detail)
+  },
+  cancel(){
+    this.setData({'visible':false})
+  },
   /**
    * 生命周期函数--监听页面加载
    */
