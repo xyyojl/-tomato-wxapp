@@ -1,16 +1,16 @@
 <view class="home-container">
   <scroll-view class="todoList" scroll-y="true">
-    <view class="item" wx:for="{{lists}}" wx:key="item.id">
-      <view class="select"></view>
+    <view class="item" wx:for="{{lists}}" wx:key="{{item.id}}" bindtap="deleteTodo" data-index="{{index}}">
+      <view class="select {{item.finished && 'active'}}"></view>
       <text>{{item.text}}</text>
     </view>
   </scroll-view>
-  <t-button class="createButton" text="创建任务" size="mini" type="change">创建任务</t-button>
+  <t-button class="createButton" text="创建任务" size="mini" type="change" bindtap="showConfirm">创建任务</t-button>
   <view class="tomato-wrapper">
     <view class="tomato">
      <t-clock text="点击开始闹钟"></t-clock>
     </view>
-    <t-confirm placeholder="xxxx" visible="{{visible}}" bindconfirm="confirm" bindcancel="cancel"></t-confirm>
+    <t-confirm placeholder="xxxx" visible="{{visibleConfirm}}" bindconfirm="confirmCreateTodo" bindcancel="hideConfirm"></t-confirm>
   </view>
 </view>
 
