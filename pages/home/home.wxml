@@ -5,11 +5,11 @@
       <text>{{item.text}}</text>
     </view>
   </scroll-view>
-  <t-button class="createButton" text="创建任务" size="mini" type="change" bindtap="showConfirm">创建任务</t-button>
+  <t-button class="createButton" text="创建任务" size="mini" type="change" bindtap="showConfirm"></t-button>
   <view class="tomato-wrapper">
-    <view class="tomato">
+    <navigator class="tomato" url="/pages/tomato/tomato">
      <t-clock text="点击开始闹钟"></t-clock>
-    </view>
+    </navigator>
     <t-confirm placeholder="xxxx" visible="{{visibleConfirm}}" bindconfirm="confirmCreateTodo" bindcancel="hideConfirm"></t-confirm>
   </view>
 </view>

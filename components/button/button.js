@@ -10,7 +10,7 @@ Component({
     },
     type: {
       type: String,
-      value: 'change'
+      value: 'default'
     },
   }
 })

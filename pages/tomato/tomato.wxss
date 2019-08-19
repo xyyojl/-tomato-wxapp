@@ -1,0 +1,11 @@
+.container{
+  height: 100%;
+  background: #F0F7F6;
+}
+.clock{
+  padding-top: 282rpx;
+  padding-bottom: 139rpx;
+}
+.button-actions{
+  margin-bottom: 48rpx;
+}
