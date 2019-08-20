@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/me/me",
     "pages/tomato/tomato",
     "pages/home/home",
     "pages/test/test",
@@ -32,7 +33,7 @@
         "selectedIconPath": "images/total-active.png"
       },
       {
-        "pagePath": "pages/home/home",
+        "pagePath": "pages/me/me",
         "text": "我的",
         "iconPath": "images/me.png",
         "selectedIconPath": "images/me-active.png"
