@@ -1,2 +1,13 @@
-<!--pages/binding/binding.wxml-->
-<text>pages/binding/binding.wxml</text>
+<view class="binding">
+  <view class="title" wx:if="{{isBinding}}">绑定PC账号</view>
+  <view class="title" wx:else>注册PC账号</view>
+  <view class="input-wrapper">
+    <input placeholder="账号" value="{{account}}" bindinput="watchAccount"></input>
+    <input placeholder="密码" value="{{password}}" bindinput="watchPassword"></input>
+  </view>
+  <t-button text="绑定" type="change" size="mini" wx:if="{{isBinding}}"></t-button>
+  <t-button text="注册" type="change" size="mini" wx:else></t-button>
+  <view class="tips" wx:if="{{isBinding}}" bindtap="goToSignUp">还没有PC账号，注册吧兄弟（点击注册）</view>
+  <view class="tips" wx:else bindtap="goToBinding" >绑定PC账号，立即同步数据</view>
+  <image src="../../images/tomato-bg.png" class="bg"></image>
+</view>

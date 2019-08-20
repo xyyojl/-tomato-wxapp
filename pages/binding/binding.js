@@ -5,7 +5,22 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isBinding: true,
+    account:'',
+    password:''
+  },
+  watchAccount(event){
+    let content = event.detail
+    console.log(content)
+  },
+  watchPassword(){
 
+  },
+  goToSignUp(){
+    this.setData({ isBinding: false })
+  },
+  goToBinding(){
+    this.setData({ isBinding: true })
   },
 
   /**
