@@ -1,17 +1,28 @@
-// pages/tomato/tomato.js
+const { http } = require('../../lib/http.js')
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    defaultSecond: 9,
+    defaultSecond: 1500,
     time: "",
     timer: null,
     timerStatus: 'stop',
     confirmVisible: false,
     againButtonVisible: false,
-    finishConfirmVisible: false
+    finishConfirmVisible: false,
+    tomato: {}
+  },
+  onShow: function () {
+    this.startTimer()
+    // 页面显示时创建番茄
+    http.post('/tomatoes').then(response => {
+      console.log(response)
+      this.data.tomato = response.data.resource
+      this.setData({ tomato: this.data.tomato})
+    })
   },
   processSecond(){
     let m = Math.floor(this.data.defaultSecond / 60)
@@ -43,7 +54,7 @@ Page({
   },
   // 再来一组
   againTimer(){
-    this.data.defaultSecond = 9
+    this.data.defaultSecond = 1500
     this.setData({againButtonVisible:false})
     this.startTimer()
   },
@@ -55,10 +66,16 @@ Page({
   // 下面是关于点击放弃，出现的 confirm的两个函数
   confirmAbandon(event){
     let content = event.detail
-    // 回到首页
-    wx.navigateBack({
-      delta: 1
+    http.put(`/tomatoes/${this.data.tomato.id}`,{
+      description: content,
+      aborted: true
     })
+    .then( response => {
+      // 回到首页
+      wx.reLaunch({ url: '/pages/home/home' })
+    })
+    
+
   },
   // 需要重启定时器
   hideConfirm(){
@@ -89,23 +106,28 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    this.startTimer()
-    this.processSecond()
-  },
+  
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.clearTimer()
+    http.put(`/tomatoes/${this.data.tomato.id}`, {
+      description: '退出放弃',
+      aborted: true
+    })
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.clearTimer()
+    http.put(`/tomatoes/${this.data.tomato.id}`, {
+      description: '退出放弃',
+      aborted: true
+    })
   },
 
   /**
