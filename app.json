@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/home/home",
     "pages/login/login",
     "pages/binding/binding",
     "pages/me/me",
     "pages/tomato/tomato",
-    "pages/home/home",
     "pages/test/test",
     "pages/index/index",
     "pages/logs/logs"
@@ -27,12 +27,6 @@
         "text":"专注",
         "iconPath":"images/home.png",
         "selectedIconPath":"images/home-active.png"
-      },
-      {
-        "pagePath": "pages/home/home",
-        "text": "专注",
-        "iconPath": "images/total.png",
-        "selectedIconPath": "images/total-active.png"
       },
       {
         "pagePath": "pages/me/me",
