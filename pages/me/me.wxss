@@ -33,6 +33,8 @@
   font-size: 32rpx;
   padding-bottom: 22rpx;
 }
+.qr::after { border: none; }
+.qr { background: transparent; color: #FE996F; font-size: 24rpx;}
 .tabs { 
   background: #fff;
   display: flex;
@@ -46,7 +48,10 @@
 .tabs > view { 
   position: relative;
   height: 100%;
- }
+}
+.tabs > view.hover-active { 
+  opacity: 0.5;
+}
 .tabs > view.active::after {
   content: "";
   width: 80%;
