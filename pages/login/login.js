@@ -11,7 +11,8 @@ Page({
   },
   // 实现步骤：点击按钮 => 调用小程序原生的 wx.login => http.post => 返回 user 
   // => 保存 user => 返回首页
-  login(event){
+  // 处理一下 login 函数
+  /* login(event){
     let encrypted_data = event.detail.encryptedData
     let iv = event.detail.iv
     let code
@@ -35,5 +36,33 @@ Page({
         })
       }
     })
+  }, */
+  login(event) {
+    let encrypted_data = event.detail.encryptedData
+    let iv = event.detail.iv
+    this.wxLogin(iv, encrypted_data)
   },
+  wxLogin(iv, encrypted_data){
+    wx.login({
+      success:(res) =>{ this.loginMe(res.code, iv, encrypted_data)}
+    })
+  },
+  loginMe(code, iv, encrypted_data){
+    http.post('/sign_in/mini_program_user', {
+      code,
+      iv,
+      encrypted_data,
+      app_id,
+      app_secret
+    })
+      .then(response => {
+        // console.log(response)
+        this.saveMessage(response)
+        wx.reLaunch({url: '/pages/home/home'})
+      })
+  },
+  saveMessage(response){
+    wx.setStorageSync('me', response.data.resource)
+    wx.setStorageSync('X-token', response.header['X-token'])
+  }
 })
