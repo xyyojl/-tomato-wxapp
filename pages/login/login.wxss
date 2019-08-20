@@ -1,0 +1,57 @@
+.login-container{
+  background: #F6F6F6;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+}
+.login-container .avatar{
+  width: 236rpx;
+  height: 236rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 8px solid rgb(246, 115, 91);
+  margin-top: 283rpx;
+  margin-bottom: 30rpx;
+}
+.login-container .avatarName{
+  color: #F6705A;
+  letter-spacing: 0.5;
+  font-size: 28rpx;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+.login-container .avatarName::after{
+  content: '';
+  width: 50%;
+  height: 4rpx;
+  border-radius: 4rpx;
+  background: red;
+  position: absolute;
+  left: 50%;
+  bottom: -12rpx;
+  transform: translateX(-50%);
+}
+button::after{ border: none; }
+.button-hover{ opacity: 0.6; }
+.loginButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 360rpx;
+  height: 80rpx;
+  color: #fff;
+  font-size: 26rpx;
+  letter-spacing: 0.8;
+  border-radius: 16rpx;
+  margin: 60rpx auto 46rpx;
+  background: linear-gradient(to right,#EF9B75, #F6705A);
+  box-shadow: 0rpx 11rpx 32rpx 0rpx rgba(246,112,90,0.30);
+}
+.binding{
+  color: #F6705A;
+  letter-spacing: 0.4;
+  font-size: 20rpx;
+}
