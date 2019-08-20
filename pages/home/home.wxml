@@ -1,16 +1,27 @@
 <view class="home-container">
   <scroll-view class="todoList" scroll-y="true">
-    <view class="item" wx:for="{{lists}}" wx:key="{{item.id}}" bindtap="deleteTodo" data-index="{{index}}">
-      <view class="select {{item.finished && 'active'}}"></view>
-      <text>{{item.text}}</text>
+    <view class="item" 
+          wx:for="{{lists}}"
+          wx:key="{{item.id}}"
+          wx:if="{{!item.completed}}">
+      <view class="select {{item.completed && 'active'}}"
+            data-id="{{item.id}}"
+            data-index="{{index}}"
+            bindtap="deleteTodo">
+      </view>
+      <text bindtap="changeText"
+            data-id="{{item.id}}"
+            data-index="{{index}}"
+            data-content="{{item.description}}">{{item.description}}</text>
     </view>
   </scroll-view>
-  <t-button class="createButton" text="创建任务" size="mini" type="change" bindtap="showConfirm"></t-button>
+  <t-button class="createButton" text="创建任务" size="mini" type="change" bindtap="showCreateConfirm"></t-button>
   <view class="tomato-wrapper">
     <navigator class="tomato" url="/pages/tomato/tomato">
      <t-clock text="点击开始闹钟"></t-clock>
     </navigator>
-    <t-confirm placeholder="xxxx" visible="{{visibleConfirm}}" bindconfirm="confirmCreateTodo" bindcancel="hideConfirm"></t-confirm>
+    <t-confirm placeholder="请输入你的任务" visible="{{visibleCreateConfirm}}" bindconfirm="confirmCreateTodo" bindcancel="hideCreateConfirm"></t-confirm>
+    <t-confirm value="{{updateContent}}"  visible="{{visibleUpdateConfirm}}" bindconfirm="confirmUpdate" bindcancel="hideUpdateConfirm"></t-confirm>
   </view>
 </view>
 

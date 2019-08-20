@@ -1,38 +1,72 @@
-// pages/home/home.js
+const { http } = require('../../lib/http.js')
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  // 下面两项，更新一个todo内容，发请求需要使用到
+  updateId: '',
+  updatIndex: '',
   data: {
-    lists:[
-      { id: 1, text: '快乐不是因为得到的多而是因为计较的少！', finished: true },
-      { id: 2, text: '我不去想是否能够成功，既然选择了远方，便只顾风雨兼程！', finished: false },
-      { id: 3, text: '如果心胸不似海，又怎能有海一样的事业。', finished: true },
-      { id: 4, text: '学习要加，骄傲要减，机会要乘，懒惰要除', finished: false },
-      { id: 5, text: '你可以很有个性，但某些时候请收敛。', finished: false }
-    ],
-    visibleConfirm:false
+    lists:[],
+    visibleCreateConfirm: false,
+    visibleUpdateConfirm: false,
+    updateContent: ''
+  },
+  onShow: function () {
+    http.get('/todos?completed=false').then(response => {
+      this.setData({ lists: response.data.resources })
+    })
   },
   confirmCreateTodo(event){
     let content = event.detail;
     if(content){
-      let todo = [{ id: this.data.lists.length + 1, text: content, finished: false }]
-      this.data.lists = todo.concat(this.data.lists)
-      this.setData({ lists: this.data.lists})
-      this.hideConfirm()
+      http.post('/todos',{
+        description: content, completed: false
+      })
+        .then(response  => {
+          let todo = [response.data.resource]
+          this.data.lists = todo.concat(this.data.lists)
+          this.setData({ lists: this.data.lists })
+          this.hideCreateConfirm()
+        })
     }
   },
   deleteTodo(event){
-    let index = event.currentTarget.dataset.index
-    this.data.lists[index].finished = true
-    this.setData({ lists: this.data.lists}) 
+    let {index,id} = event.currentTarget.dataset
+    http.put(`/todos/${id}`,{
+      completed: true
+    }).then(response => {
+      let todo = response.data.resource
+      this.data.lists[index] = todo
+      this.setData({ lists: this.data.lists }) 
+    })
   },
-  hideConfirm(){
-    this.setData({ 'visibleConfirm':false })
+  hideCreateConfirm(){
+    this.setData({ 'visibleCreateConfirm':false })
   },
-  showConfirm(){
-    this.setData({ 'visibleConfirm': true })
+  showCreateConfirm(){
+    this.setData({ 'visibleCreateConfirm': true })
+  },
+  changeText(event){
+    // 更新todo
+    let { index, id, content } = event.currentTarget.dataset
+    this.updateId = id
+    this.updatIndex = index
+    this.setData({ 'visibleUpdateConfirm': true, updateContent: content })
+  },
+  confirmUpdate(event){
+    // 将更新后的todo发送给后台
+    let content = event.detail
+    this.setData({ 'visibleUpdateConfirm': false})
+    http.put(`/todos/${this.updateId}`,{
+      description: content
+    })
+      .then(response => {
+        let todo = response.data.resource
+        this.data.lists[this.updatIndex] = todo
+        this.setData({ lists: this.data.lists})
+        this.hideUpdateConfirm()
+      })
+  },
+  hideUpdateConfirm(){
+    this.setData({ 'visibleUpdateConfirm': false })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -51,9 +85,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  
 
   /**
    * 生命周期函数--监听页面隐藏
