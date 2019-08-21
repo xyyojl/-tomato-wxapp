@@ -3,7 +3,7 @@
     <view class="avatar"><open-data type="userAvatarUrl"></open-data></view>
     <view class="avatarDetail">
       <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
-      <text>绑定pc账号</text>
+      <navigator url="/pages/binding/binding" wx:if="{{!me.account}}">绑定pc账号</navigator>
     </view>
     <view class="qr">问题反馈</view>
   </view>
