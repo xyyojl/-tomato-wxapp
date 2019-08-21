@@ -1,4 +1,5 @@
-// pages/me/me.js
+const { http } = require('../../lib/http.js')
+
 Page({
 
   /**
@@ -6,22 +7,34 @@ Page({
    */
   data: {
     tab:'tomato',
-    lists: {
-      "本周四": [
-        { time: "14:00", text: "快乐不是因为得到的多而是因为计较的少！", id: 1 },
-        { time: "14:00", text: "我不去想是否能够成功，既然选择了远方，便只顾风雨兼程！", id: 4 }
-      ],
-      "本周五": [{ time: "14:00", text: "快乐不是因为得到的多而是因为计较的少！", id: 2 }],
-      "本周天": [{ time: "14:00", text: "快乐不是因为得到的多而是因为计较的少！", id: 3 }],
-      "本周一": [{ time: "14:00", text: "快乐不是因为得到的多而是因为计较的少！", id: 3 }],
-      "本周二": [{ time: "14:00", text: "快乐不是因为得到的多而是因为计较的少！", id: 3 }],
-      "本周三": [{ time: "14:00", text: "快乐不是因为得到的多而是因为计较的少！", id: 3 }],
-    }
+    tomatoes: {},
+    todos: {}
+  },
+  onShow: function () {
+    this.fetchTomatoes()
+    this.fetchTodos()
   },
   changeTab(event){
     let name = event.currentTarget.dataset.name
     this.setData({tab:name})
-
+  },
+  fetchTomatoes(){
+    http.get('/tomatoes',{
+      is_group: "yes"
+    })
+      .then(response => {
+        console.log(response.data.resources )
+        console.log(this.data.tomatoes)
+        this.setData({ tomatoes: response.data.resources})
+      })
+  },
+  fetchTodos(){
+    http.get('/todos', {
+      is_group: "yes"
+    })
+      .then(response => {
+        this.setData({ todos: response.data.resources })
+      })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -40,9 +53,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
 
-  },
 
   /**
    * 生命周期函数--监听页面隐藏

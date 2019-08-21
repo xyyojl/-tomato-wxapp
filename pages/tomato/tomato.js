@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    defaultSecond: 1500,
+    defaultSecond: 9,
     time: "",
     timer: null,
     timerStatus: 'stop',
@@ -84,7 +84,9 @@ Page({
   },
   // 番茄钟倒计时结束出现的 confirm 组件绑定的函数
   confirmFinsh(event){
+    this.clearTimer()
     let content = event.detail
+    console.log(content)
   },
   confirmCancel(){
     this.setData({ finishConfirmVisible: false })
