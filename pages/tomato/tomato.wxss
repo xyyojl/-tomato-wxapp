@@ -9,3 +9,13 @@
 .button-actions{
   margin-bottom: 48rpx;
 }
+.ending{
+  text-align: center;
+  font-family: PingFangSC-Regular;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 36rpx;
+  color: #F87A5F;
+}

@@ -23,6 +23,7 @@ Page({
       is_group: "yes"
     })
       .then(response => {
+        console.log(response)
         console.log(response.data.resources )
         console.log(this.data.tomatoes)
         this.setData({ tomatoes: response.data.resources})
@@ -34,6 +35,7 @@ Page({
     })
       .then(response => {
         this.setData({ todos: response.data.resources })
+        console.log(this.data.todos)
       })
   },
   /**

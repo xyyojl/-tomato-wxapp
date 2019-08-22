@@ -1,6 +1,6 @@
 <view class="home-container">
   <scroll-view class="todoList" scroll-y="true">
-    <view class="item" 
+    <view class="item {{selectTab === index?'active':null}}" 
           wx:for="{{lists}}"
           wx:key="{{item.id}}"
           wx:if="{{!item.completed}}">

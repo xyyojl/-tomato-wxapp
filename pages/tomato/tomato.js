@@ -1,12 +1,8 @@
 const { http } = require('../../lib/http.js')
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    defaultSecond: 9,
+    defaultSecond: 1500,
     time: "",
     timer: null,
     timerStatus: 'stop',
@@ -16,13 +12,16 @@ Page({
     tomato: {}
   },
   onShow: function () {
-    this.startTimer()
     // 页面显示时创建番茄
     http.post('/tomatoes').then(response => {
       console.log(response)
       this.data.tomato = response.data.resource
       this.setData({ tomato: this.data.tomato})
+      console.log(this.data.tomato)
     })
+    if(this.data.defaultSecond){
+      this.startTimer()
+    }
   },
   processSecond(){
     let m = Math.floor(this.data.defaultSecond / 60)
@@ -55,6 +54,7 @@ Page({
   // 再来一组
   againTimer(){
     this.data.defaultSecond = 1500
+    this.setData({ defaultSecond: this.data.defaultSecond})
     this.setData({againButtonVisible:false})
     this.startTimer()
   },
@@ -74,8 +74,6 @@ Page({
       // 回到首页
       wx.reLaunch({ url: '/pages/home/home' })
     })
-    
-
   },
   // 需要重启定时器
   hideConfirm(){
@@ -83,73 +81,54 @@ Page({
     this.startTimer()
   },
   // 番茄钟倒计时结束出现的 confirm 组件绑定的函数
+  // 后台接口未确定好
   confirmFinsh(event){
     this.clearTimer()
     let content = event.detail
-    console.log(content)
+    this.setData({finishConfirmVisible: false})
+    if(content){ // 用户有输入内容
+      http.put(`/tomatoes/${this.data.tomato.id}`,{
+        description: content,
+        aborted: false
+      })
+      .then(response => {})
+    }else{
+      http.put(`/tomatoes/${this.tomato.id}`, {
+        description: content,
+        aborted: true
+      })
+        .then(response => {
+          wx.reLaunch({ url: '/pages/home/home' })
+        })
+    }
   },
-  confirmCancel(){
+  confirmCancel(event){
     this.setData({ finishConfirmVisible: false })
+    let content = event.detail
+    http.put(`/tomatoes/${this.tomato.id}`, {
+      description: content,
+      aborted: true
+    })
+      .then(response => {
+        // wx.reLaunch({ url : '/pages/home/home'})
+      })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide: function () {
-    this.clearTimer()
-    http.put(`/tomatoes/${this.data.tomato.id}`, {
-      description: '退出放弃',
-      aborted: true
-    })
+    if (this.data.defaultSecond){
+      this.clearTimer()
+      http.put(`/tomatoes/${this.data.tomato.id}`, {
+        description: '退出放弃',
+        aborted: true
+      })
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
-    this.clearTimer()
-    http.put(`/tomatoes/${this.data.tomato.id}`, {
-      description: '退出放弃',
-      aborted: true
-    })
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    if (this.data.defaultSecond){
+      this.clearTimer()
+      http.put(`/tomatoes/${this.data.tomato.id}`, {
+        description: '退出放弃',
+        aborted: true
+      })
+    }
   }
 })

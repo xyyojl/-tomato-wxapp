@@ -7,12 +7,16 @@ Page({
     lists:[],
     visibleCreateConfirm: false,
     visibleUpdateConfirm: false,
-    updateContent: ''
+    updateContent: '',
+    selectTab:''
   },
   onShow: function () {
     http.get('/todos?completed=false').then(response => {
       this.setData({ lists: response.data.resources })
     })
+    if(!this.data.lists.length){
+      this.setData({ selectTab: ''})
+    }
   },
   confirmCreateTodo(event){
     let content = event.detail;
@@ -30,12 +34,19 @@ Page({
   },
   deleteTodo(event){
     let {index,id} = event.currentTarget.dataset
+    this.setData({ selectTab: index})
     http.put(`/todos/${id}`,{
       completed: true
     }).then(response => {
       let todo = response.data.resource
       this.data.lists[index] = todo
       this.setData({ lists: this.data.lists }) 
+      this.setData({ selectTab: ''})
+      wx.showToast({
+        title: '确认完成',
+        icon: 'success',
+        duration: 1000
+      })
     })
   },
   hideCreateConfirm(){
@@ -67,58 +78,5 @@ Page({
   },
   hideUpdateConfirm(){
     this.setData({ 'visibleUpdateConfirm': false })
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
   }
 })

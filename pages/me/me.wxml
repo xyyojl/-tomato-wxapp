@@ -4,7 +4,7 @@
     <view class="avatarDetail">
       <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
     </view>
-    <view class="qr">问题反馈</view>
+    <view class="qr" open-type="contact">问题反馈</view>
   </view>
   <view class="tabs">
     <view hover-class="hover-active" class="{{tab === 'tomato' && 'active'}}" data-name="tomato" bindtap="changeTab">番茄历史</view>

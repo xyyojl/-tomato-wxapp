@@ -1,10 +1,11 @@
 {
   "pages": [
+    "pages/tomato/tomato",
     "pages/login/login",
     "pages/home/home",
     "pages/me/me",
     "pages/binding/binding",
-    "pages/tomato/tomato",
+    
     "pages/test/test",
     "pages/index/index",
     "pages/logs/logs"
