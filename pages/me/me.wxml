@@ -1,34 +1,45 @@
 <view class="container">
   <view class="header">
-    <view class="avatar"><open-data type="userAvatarUrl"></open-data></view>
-    <view class="avatarDetail">
-      <open-data type="userNickName" lang="zh_CN" class="name"></open-data>
+    <view class="avatar">
+      <open-data type='userAvatarUrl'></open-data>
     </view>
-    <view class="qr" open-type="contact">问题反馈</view>
+    <view class="details">
+      <open-data type="userNickName" class="name"></open-data>
+    </view>
+    <button class="qr" open-type="contact">问题反馈</button>
   </view>
-  <view class="tabs">
-    <view hover-class="hover-active" class="{{tab === 'tomato' && 'active'}}" data-name="tomato" bindtap="changeTab">番茄历史</view>
-    <view hover-class="hover-active" class="{{tab === 'task' && 'active'}}"  data-name="task" bindtap="changeTab">我完成的任务</view>
-  </view>
-  <scroll-view scroll-y="true" class="lists" wx:if="{{tab === 'tomato'}}">
-    <view class="item" wx:for="{{tomatoes}}" wx:for-index="key" wx:key="index">
-      <wxs src="../../lib/formattor.wxs" module="formattor"></wxs>
-      <view class="time">{{formattor.monthFormat(key)}}</view>
-      <view class="content" wx:for="{{tomatoes[key]}}" wx:for-index="index" wx:key="index">
-        <text>{{formattor.dateFormat(item.created_at,"hh:mm")}}</text>
-        <view class="detail">{{item.description}}</view>
-      </view>
-    </view>
-  </scroll-view>
-  <scroll-view scroll-y="true" class="lists" wx:if="{{tab === 'task'}}">
-    <view class="item" wx:for="{{todos}}" wx:for-index="key" wx:key="index">
-      <wxs src="../../lib/formattor.wxs" module="formattor"></wxs>
-      <view class="time">{{formattor.monthFormat(key)}}</view>
-      <view class="content" wx:for="{{todos[key]}}" wx:for-index="index" wx:key="index">
-        <text>{{formattor.dateFormat(item.created_at,"hh:mm")}}</text>
-        <view class="detail">{{item.description}}</view>
-      </view>
-    </view>
-  </scroll-view>
-</view>
 
+  <view class="tabs">
+    <view hover-class="hover-active" data-name="0" bindtap="changeTomato">番茄历史</view>
+    <view hover-class="hover-active" data-name="1" bindtap="changeTask">我完成的任务</view>
+  </view>
+  <view class="{{tab == '1' ? 'active afterTabs':'afterTabs'}}"></view>
+  <view class="kists-wrapper">
+    <swiper class="swiper-wrapper" bindchange="swiperChange" current="{{tab}}">
+      <swiper-item>
+        <scroll-view scroll-y="true" class="lists">
+          <view class="item" wx:for="{{tomatoes}}" wx:for-index="key" wx:key="index">
+            <wxs src="../../lib/formattor.wxs" module="formattor"></wxs>
+            <view class="time">{{formattor.monthFormat(key)}}</view>
+            <view class="content" wx:for="{{tomatoes[key]}}"  wx:for-index="index" wx:key="index">
+              <text>{{formattor.dateFormat(item.created_at,"hh:mm")}}</text>
+              <view class="detail">{{item.description}}</view>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view scroll-y="true" class="lists">
+          <view class="item" wx:for="{{todos}}" wx:for-index="key" wx:key="index">
+            <wxs src="../../lib/formattor.wxs" module="formattor"></wxs>
+            <view class="time">{{formattor.monthFormat(key)}}</view>
+            <view class="content" wx:for="{{todos[key]}}" wx:for-index="index" wx:key="index">
+              <text>{{formattor.dateFormat(item.created_at,"hh:mm")}}</text>
+              <view class="detail">{{item.description}}</view>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>
