@@ -27,8 +27,8 @@ Page({
       })
   },
   swiperChange(event){
-    console.log('event.detail.current')
-    console.log(event.detail.current)
+    /* console.log('event.detail.current')
+    console.log(event.detail.current) */
     this.setData({ tab: event.detail.current })
   },
   changeTomato(event){
